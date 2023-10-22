@@ -4,39 +4,71 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\ResourceLink;
 use Illuminate\Http\Request;
+use App\Models\DataType; // Import the DataType model
 
 class PostController extends Controller
 {
     public function index()
     {
+        $r= ResourceLink::all();
+        $posts = Post::with('resourceLinks') // Eager load the related resource links
+            ->latest()
+            ->get();
+            
+        // Transform the data to include resource link content
         
-        $posts = Post::latest()->get(['year', 'content', 'resource_link']);
+    
         return response()->json($posts);
     }
 
     public function create()
     {
-        return view('posts.create');
+        $dataTypes = DataType::all(); // You can add orderBy if needed
+
+        return view('posts.create', ['dataTypes' => $dataTypes]);
     }
 
     public function store(Request $request)
     {
+     // dd($request);
         // Validation and post creation logic
         $post = Post::create([
-            // 'title' => $request->input('title'),
             'content' => $request->input('content'),
             'year' => $request->input('year'),
-            'resource_link' => $request->input('resource_link'),
+            'metadata'  => $request->input('year'),
+            'summary'  => $request->input('summary'),
+            
         ]);
+    
+        // Store resource links with data type
+        $resourceLinksData = $request->input('resource_link');
+        $dataTypes = $request->input('data_type_id');
+        $resourceLinks = [];
+    
+        if (!empty($resourceLinksData)) {
+            foreach ($resourceLinksData as $key => $link) {
+                if (!empty($link)) {
+                    $dataTypeId = $dataTypes[$key] ?? null;
+                    $resourceLinks[] = new ResourceLink([
+                        'url' => $link,
+                        'data_type_id' => $dataTypeId,
+                    ]);
+                }
+            }
+        }
+    
+        $post->resourceLinks()->saveMany($resourceLinks);
+    
         $notification = [
-            'message' => 'time frame created successfully.',
+            'message' => 'Time frame created successfully.',
             'alert' => 'success',
         ];
-
-        return redirect('/posts/create') ->with('notification', $notification);
+    
+        return redirect('/posts/create')->with('notification', $notification);
     }
-
+    
     public function show(Post $post)
     {
         return response()->json([

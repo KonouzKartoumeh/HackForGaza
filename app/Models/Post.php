@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $table = 'date_frame'; // Specify the new table name
+    protected $table = 'dateframe_info'; // Specify the new table name
 
     use HasFactory;
-    protected $fillable = ['content', 'year', 'resource_link']; // Add 'content' here
+    protected $fillable = ['content', 'year', 'resource_link','url','summary','metadata']; // Add 'content' here
     public function resourceLinks()
     {
         return $this->hasMany(ResourceLink::class);

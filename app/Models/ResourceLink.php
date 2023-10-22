@@ -12,4 +12,6 @@ class ResourceLink extends Model
     {
         return $this->belongsTo(Post::class);
     }
+protected $fillable = ['url','data_type_id'];
+
 }
