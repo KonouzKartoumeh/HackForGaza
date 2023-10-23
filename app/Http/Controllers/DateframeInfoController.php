@@ -12,15 +12,9 @@ class DateframeInfoController extends Controller
 {
     public function index()
     {
-        $r= ResourceLink::all();
-        $dateframes_Info = DateframeInfo::with('resourceLinks') // Eager load the related resource links
-            ->latest()
-            ->get();
-            
-        // Transform the data to include resource link content
-        
-    
-        return response()->json($dateframes_Info);
+        $dateframeInfo = DateframeInfo::all(); // Replace DateframeInfo with your actual model name
+
+        return view('dateframe-info', ['dateframeInfo' => $dateframeInfo]);
     }
 
     public function create()
@@ -32,7 +26,7 @@ class DateframeInfoController extends Controller
 
     public function store(Request $request)
     {
-  //   dd($request);
+     //   dd($request);
         // Validation and dateframe_Info creation logic
         $dateframe_Info = DateframeInfo::create([
             'content' => $request->input('content'),
@@ -78,10 +72,19 @@ class DateframeInfoController extends Controller
         ]);
     }
 
-    public function update(Request $request, DateframeInfo $dateframe_Info)
+    public function update(Request $request, $id)
     {
-        $dateframe_Info->update($request->all());
-        return response()->json($dateframe_Info, 200);
+        $dateframeInfo = DateframeInfo::find($id); // Replace 'DateframeInfo' with your model name
+    
+        // Update Date Frame Info with data from the form
+        $dateframeInfo->update([
+            'year' => $request->input('year'),
+            'content' => $request->input('content'),
+            'summary' => $request->input('summary'),
+            // Update more fields as needed
+        ]);
+    
+        return redirect()->route('admin.dateframe-info.index')->with('success', 'Date Frame Info updated successfully');
     }
 
     public function destroy(DateframeInfo $dateframe_Info)
@@ -89,5 +92,12 @@ class DateframeInfoController extends Controller
         $dateframe_Info->delete();
         return response()->json(null, 204);
     }
+
+    public function edit($id)
+{
+    $dateframeInfo = DateframeInfo::find($id); // Replace 'DateframeInfo' with your model name
+    
+    return view('dateframes_info.edit', ['dateframeInfo' => $dateframeInfo]);
+}
 }
 
