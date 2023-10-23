@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/posts/create', 'App\Http\Controllers\PostController@create');
-    Route::post('/posts', 'App\Http\Controllers\PostController@store');
+    Route::get('/', 'App\Http\Controllers\DateframeInfoController@create');
+    Route::post('/dateframeInfo', 'App\Http\Controllers\DateframeInfoController@store')->name('dateframes_Info.store');
 });

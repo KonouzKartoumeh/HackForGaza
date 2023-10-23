@@ -3,38 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+use App\Models\DateframeInfo;
 use App\Models\ResourceLink;
 use Illuminate\Http\Request;
 use App\Models\DataType; // Import the DataType model
 
-class PostController extends Controller
+class DateframeInfoController extends Controller
 {
     public function index()
     {
         $r= ResourceLink::all();
-        $posts = Post::with('resourceLinks') // Eager load the related resource links
+        $dateframes_Info = DateframeInfo::with('resourceLinks') // Eager load the related resource links
             ->latest()
             ->get();
             
         // Transform the data to include resource link content
         
     
-        return response()->json($posts);
+        return response()->json($dateframes_Info);
     }
 
     public function create()
     {
         $dataTypes = DataType::all(); // You can add orderBy if needed
 
-        return view('posts.create', ['dataTypes' => $dataTypes]);
+        return view('dateframes_Info.create', ['dataTypes' => $dataTypes]);
     }
 
     public function store(Request $request)
     {
-     // dd($request);
-        // Validation and post creation logic
-        $post = Post::create([
+  //   dd($request);
+        // Validation and dateframe_Info creation logic
+        $dateframe_Info = DateframeInfo::create([
             'content' => $request->input('content'),
             'year' => $request->input('year'),
             'metadata'  => $request->input('year'),
@@ -59,34 +59,34 @@ class PostController extends Controller
             }
         }
     
-        $post->resourceLinks()->saveMany($resourceLinks);
+        $dateframe_Info->resourceLinks()->saveMany($resourceLinks);
     
         $notification = [
             'message' => 'Time frame created successfully.',
             'alert' => 'success',
         ];
     
-        return redirect('/posts/create')->with('notification', $notification);
+        return back()->with('notification', $notification);
     }
     
-    public function show(Post $post)
+    public function show(DateframeInfo $dateframe_Info)
     {
         return response()->json([
-            'year' => $post->year,
-            'content' => $post->content,
-            'resource_link' => $post->resource_link,
+            'year' => $dateframe_Info->year,
+            'content' => $dateframe_Info->content,
+            'resource_link' => $dateframe_Info->resource_link,
         ]);
     }
 
-    public function update(Request $request, Post $post)
+    public function update(Request $request, DateframeInfo $dateframe_Info)
     {
-        $post->update($request->all());
-        return response()->json($post, 200);
+        $dateframe_Info->update($request->all());
+        return response()->json($dateframe_Info, 200);
     }
 
-    public function destroy(Post $post)
+    public function destroy(DateframeInfo $dateframe_Info)
     {
-        $post->delete();
+        $dateframe_Info->delete();
         return response()->json(null, 204);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class DateframeInfo extends Model
 {
     protected $table = 'dateframe_info'; // Specify the new table name
 
