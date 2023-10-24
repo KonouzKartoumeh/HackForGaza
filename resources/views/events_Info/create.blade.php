@@ -23,7 +23,7 @@
 
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input type="number" name="date" id="date" class="form-control" required>
+                            <input type="date" name="date" id="date" class="form-control" required>
                         </div>
 
                         <div id="resourceLinks">
@@ -58,10 +58,7 @@
                             <textarea name="description" id="description" class="form-control" rows="3"></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="metadata">Metadata (Optional)</label>
-                            <input type="text" name="metadata" id="metadata" class="form-control">
-                        </div>
+
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Create Event Info</button>

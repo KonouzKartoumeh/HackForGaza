@@ -49,7 +49,7 @@ class EventInfoController extends Controller
         $event_Info = EventInfo::create([
             'title' => $request->input('title'),
             'date' => $request->input('date'),
-            'metadata'  => $request->input('date'),
+
             'description'  => $request->input('description'),
             'image' => $imagePath, // Store the image path in the 'image' column
         ]);
