@@ -57,7 +57,10 @@
                             <label for="description">Description (Optional)</label>
                             <textarea name="description" id="description" class="form-control" rows="3"></textarea>
                         </div>
-
+                        <div class="form-group">
+                            <label for="priority_level">Priority Level</label>
+                            <input type="checkbox" name="priority_level" id="priority_level" value="1" @if(old('priority_level') == 1) checked @endif>
+                        </div>
 
 
                         <div class="form-group">

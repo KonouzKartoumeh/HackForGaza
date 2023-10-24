@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->text('title');
             $table->date('date');
+            $table->integer('event_year')->unsigned()->nullable();
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->json('metadata')->nullable();
+            $table->integer('priority_level')->unsigned()->default(0);
             $table->timestamps();
         });
     }
