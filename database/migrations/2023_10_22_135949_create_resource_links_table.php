@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('resource_links', function (Blueprint $table) {
             $table->id();
             $table->string('url');
-            $table->unsignedBigInteger('dateframe_info_id');
+            $table->unsignedBigInteger('event_info_id');
             $table->unsignedBigInteger('data_type_id'); // Add data_type_id
             $table->timestamps();
     

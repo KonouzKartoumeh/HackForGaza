@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dateframe_info', function (Blueprint $table) {
+        Schema::create('event_info', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
-            $table->integer('year');
-            $table->string('resource_link')->nullable();
+            $table->text('title');
+            $table->date('date');
             $table->string('image')->nullable();
-            $table->text('summary')->nullable();
+            $table->text('description')->nullable();
             $table->json('metadata')->nullable();
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dateframe_info');
+        Schema::dropIfExists('event_info');
     }
 };

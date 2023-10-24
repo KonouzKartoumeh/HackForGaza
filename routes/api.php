@@ -17,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resource('dateframe_info', 'App\Http\Controllers\InfoAPIController');
+Route::resource('event_info', 'App\Http\Controllers\InfoAPIController');
 

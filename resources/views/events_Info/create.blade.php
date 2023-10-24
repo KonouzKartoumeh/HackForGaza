@@ -13,17 +13,17 @@
                 <div class="card-header">Create a New Date Frame Info</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('dateframes_Info.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('events_Info.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group">
-                            <label for="content">Content</label>
-                            <textarea name="content" id="content" class="form-control" rows="5" required></textarea>
+                            <label for="title">Title</label>
+                            <textarea name="title" id="title" class="form-control" rows="5" required></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label for="year">Year</label>
-                            <input type="number" name="year" id="year" class="form-control" required>
+                            <label for="date">Date</label>
+                            <input type="number" name="date" id="date" class="form-control" required>
                         </div>
 
                         <div id="resourceLinks">
@@ -54,8 +54,8 @@
                         </div>
 
                         <div class "form-group">
-                            <label for="summary">Summary (Optional)</label>
-                            <textarea name="summary" id="summary" class="form-control" rows="3"></textarea>
+                            <label for="description">Description (Optional)</label>
+                            <textarea name="description" id="description" class="form-control" rows="3"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Create DateFrame Info</button>
+                            <button type="submit" class="btn btn-primary">Create Event Info</button>
                         </div>
                     </form>
                 </div>

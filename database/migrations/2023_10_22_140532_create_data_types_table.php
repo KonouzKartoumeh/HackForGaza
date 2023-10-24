@@ -18,12 +18,9 @@ return new class extends Migration
     
         // Insert allowed data types
         DB::table('data_types')->insert([
-            ['name' => 'book'],
-            ['name' => 'website'],
-            ['name' => 'thesis'],
-            ['name' => 'scientific_research'],
-            ['name' => 'video'],
-            ['name' => 'image'],
+            ['name' => 'books'],
+            ['name' => 'articles'],
+            ['name' => 'documentaries'],
         ]);
     }
 

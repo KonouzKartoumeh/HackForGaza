@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ResourceLink extends Model
 {
     use HasFactory;
-    public function dateframe_Info()
+    public function event_Info()
     {
-        return $this->belongsTo(DateframeInfo::class);
+        return $this->belongsTo(EventInfo::class);
     }
 protected $fillable = ['url','data_type_id'];
 
