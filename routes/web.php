@@ -30,3 +30,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/event-info/{id}', 'App\Http\Controllers\EventInfoController@update')->name('event-info.update');
 
 });
+
+Route::get('/resource-links', 'App\Http\Controllers\ResourceLinkController@index')->name('resource-links.index');

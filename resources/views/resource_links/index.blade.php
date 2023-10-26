@@ -6,25 +6,27 @@
     <div class="container">
         <h1>Resource links</h1>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>url</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($resourceLinks as $code)
-                    <tr>
-                        <td>{{ $code->id }}</td>
-                        <td>{{ $code->url }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
 
-        </table>
+<div class="row">
+    @php
+function extractFacebookVideoId($url) {
+    // Use regular expression to extract the video ID from the Facebook URL
+    if (preg_match('/[?&]v=([^&]+)/', $url, $matches)) {
+        return $matches[1];
+    }
 
-        @foreach ($resourceLinks as $video)
+    return null; // Invalid Facebook video URL
+}
+@endphp
+    @php $count = 0; @endphp
+
+    @foreach ($resourceLinks as $video)
+        @if ($count % 3 == 0)
+            </div>
+            <div class="row">
+        @endif
+
+        <div class="col-md-4">
             @if (str_contains($video->url, 'youtube.com'))
                 @php
                     $videoUrl = $video->url; // Replace with your video URL
@@ -32,9 +34,8 @@
                 @endphp
 
                 <div class="video-container">
-                    <iframe width="560" height="315" src="{{ $embeddedUrl }}" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="100%" height="315" src="{{ $embeddedUrl }}" frameborder="0" allowfullscreen></iframe>
                 </div>
-
                 <!-- Embed YouTube Video -->
             @elseif (str_contains($video->url, 'instagram.com'))
                 <!-- Embed Instagram Post -->
@@ -60,7 +61,7 @@
 
                 @if ($embeddedUrl)
                     <div class="video-container">
-                        <iframe src="{{ $embeddedUrl }}" width="560" height="315" style="border:none;overflow:hidden"
+                        <iframe src="{{ $embeddedUrl }}" width="100%" height="315" style="border:none;overflow:hidden"
                             scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
                     </div>
                 @else
@@ -70,7 +71,29 @@
                 <!-- Unknown Video Type -->
                 <p>Video link doesn't match any known type</p>
             @endif
+        </div>
+
+        @php $count++; @endphp
+    @endforeach
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>url</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($resourceLinks as $code)
+            <tr>
+                <td>{{ $code->id }}</td>
+                <td><a href="{{ $code->url }}">{{ $code->url }}</a></td>
+            </tr>
         @endforeach
+    </tbody>
+
+</table>
 
 
     </div>
