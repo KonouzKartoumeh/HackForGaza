@@ -40,8 +40,9 @@ class EventInfoController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->extension(); // Generate a unique name for the image
-            $imagePath = $image->storeAs('images', $imageName, 'public'); // Store the image in the 'public/images' directory
-        }
+            $imagePath = 'images/' . $imageName; // Store the image path without the 'public' part
+            $image->move(public_path('images'), $imageName); // Store the image in the 'public/images' directory
+        }    
     
         // Store resource links with data type
         $resourceLinksData = $request->input('resource_link');
@@ -51,7 +52,7 @@ class EventInfoController extends Controller
             'date' => $request->input('date'),
             'event_year'=> date('Y', strtotime($request->input('date'))),
             'description'  => $request->input('description'),
-            'image' => $imagePath, // Store the image path in the 'image' column
+            'image' => $imagePath, // Store the image path without the 'public' part
         ]);
         $resourceLinks = [];
     

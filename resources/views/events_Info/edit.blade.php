@@ -26,6 +26,7 @@
                         </div>
 
                         <!-- Add more form fields for editing as needed -->
+                        <img src="{{ asset($eventInfo->image) }}" alt="img">
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Update</button>
