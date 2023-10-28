@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::resource('event_info', 'App\Http\Controllers\InfoAPIController');
 
+Route::get('/home', 'App\Http\Controllers\InfoAPIController@home');
