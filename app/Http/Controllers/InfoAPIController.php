@@ -15,47 +15,50 @@ class InfoAPIController extends Controller
     {
         $events_Info = EventInfo::with('resourceLinks')
             ->select('id', 'title', 'date', 'event_year', 'image', 'description', 'priority_level')
-            ->distinct('event_year')
             ->latest()
             ->get();
     
-        $eventsByYear = [];
-        $yearId = 1; // Initialize the year ID
-    
+        $eventsGrouped = [];
+        $yearCounter = 1; // Initialize the year counter
+        $images = [];
         foreach ($events_Info as $event) {
             $year = $event->event_year;
-            $events = EventInfo::where('event_year', $year)->get();
-            $images = []; // Initialize an array to store event images
+            $formattedEvents = $events_Info
+                ->where('event_year', $year)
+                ->map(function ($event) {
+                    $date = Carbon::parse($event->date);
+                    $formattedDate = $date->format('F d, Y');
+                    $month = $date->format('F');
+                    $images[] = $event->image;
 
-            $formattedEvents = $events->map(function ($event) {
-                $date = Carbon::parse($event->date);
-                $formattedDate = $date->format('F d, Y');
-                $month = $date->format('F');
-                $images[] = $event->image;
-                return [
-                    'id' => $event->id,
-                    'event_name' => $event->title,
-                    'date' => $formattedDate,
-                    'month' => $month,
-                    'image' => $event->image,
-                    'description' => $event->description,
-                    'is_flagged' => $event->priority_level === 1,
-                    'resource_links' => $event->resourceLinks,
-                ];
-            });
+                    return [
+                        'id' => $event->id,
+                        'event_name' => $event->title,
+                        'date' => $formattedDate,
+                        'month' => $month,
+                        'image' => $event->image,
+                        'description' => $event->description,
+                        'is_flagged' => $event->priority_level === 1,
+                        'resource_links' => $event->resourceLinks,
+                    ];
+                });
     
-            $eventsByYear[] = [
-                'id' => $yearId, // Incremental ID for each year
+            $eventsGrouped[] = [
+                'id' => $yearCounter, // Assign the counter as an id
                 'img' => $images,
                 'date_year' => $year,
-                'events' => $formattedEvents,
+                'events' => $formattedEvents->unique('id')->values()->all(),
             ];
     
-            $yearId++; // Increment the year ID for the next year
+            $yearCounter++; // Increment the year counter
         }
     
-        return response()->json($eventsByYear);
+        // Make sure the year is unique and not repeated
+        $uniqueYears = collect($eventsGrouped)->unique('date_year')->values()->all();
+    
+        return response()->json($uniqueYears);
     }
+    
     
     
 }
